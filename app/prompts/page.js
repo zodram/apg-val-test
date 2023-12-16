@@ -1,25 +1,30 @@
+"use client"
 import React from 'react';
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { useNavigate } from 'react-router-dom';
-import prompts from '@/app/api/prompts';
+// import getPrompts from '@/app/lib/prompts.js'
+
 
 
 
 
 const PromptsList = () =>{
- const prompts = prompts.getPrompts();
- console.log(prompts)
-  // const [prompts, setPrompts] = useState([]);
-  // const getPromptsData = async () => {
-  //   const promptsUrl = "http://localhost:8001/prompts/";
-  //   const promptsResponse = await fetch(promptsUrl);
-  //   if (promptsResponse.ok) {
-  //     const data = await promptsResponse.json();
-  //     setPrompts(data);
-  //     console.log("prompts data:", data);
-  //   }
-  // };
+//  const prompts = getPrompts();
+//  console.log(prompts);
+  const [prompts, setPrompts] = useState([]);
+  const getPromptsData = async () => {
+    const promptsUrl = '/api/prompts';
+    const promptsResponse = await fetch(promptsUrl);
+    if (promptsResponse.ok) {
+      const data = await promptsResponse.json();
+      setPrompts(data);
+      console.log("prompts data:", data);
+    }
+  };
 
+  useEffect(() => {
+    getPromptsData();
+  }, [])
 
   // const navigate = useNavigate();
   // const edit = (id) => {

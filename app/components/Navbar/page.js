@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 const Nav = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">Apologist</NavLink>
 
@@ -25,7 +25,7 @@ const Nav = () => {
           </ul>
         </div>
       </div>
-    </nav>
+    </div>
   )
 }
 
