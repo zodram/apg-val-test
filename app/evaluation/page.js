@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 // import React from 'react';
 // import { useEffect, useState } from "react";
 // import { useNavigate } from 'react-router-dom';
@@ -8,50 +8,11 @@
 
 
 
-export default function promptList() {
-//  const prompts = getPrompts();
-//  console.log(prompts);
-  // const [prompts, setPrompts] = useState([]);
-  // const getPromptsData = async () => {
-  //   const promptsUrl = '/api/prompts';
-  //   const promptsResponse = await fetch(promptsUrl);
-  //   if (promptsResponse.ok) {
-  //     const data = await promptsResponse.json();
-  //     setPrompts(data);
-  //     console.log("prompts data:", data);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getPromptsData();
-  // }, [])
-
-
-  // const getData = async () => {
-  //   await fetch('/api/prompts')
-  //   .then( res => res.json() )
-  //   .then( data => {
-  //     console.log(data.data.rows);
-  //   })
-  //   .catch( err => console.log(err) )
-  //   .finally( () => {
-  //     // set loading to false
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   getData();
-  // }, [])
-
-  // const navigate = useNavigate();
-  // const edit = (id) => {
-  //   console.log(id);
-  //   navigate(`/prompts/${id}`);
-  // };
+export default function evaluation() {
 
   return(
-      <div>
-      <h1 className="text-center">Prompts</h1>
+      <main>
+      <h1>Evaluation</h1>
       {/* <table className="table table-striped">
         <thead>
           <tr>
@@ -91,7 +52,7 @@ export default function promptList() {
             })}
         </tbody>
       </table> */}
-      </div>
+      </main>
     );
   }
 
