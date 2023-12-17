@@ -11,19 +11,36 @@ import { useEffect, useState } from "react";
 const PromptsList = () =>{
 //  const prompts = getPrompts();
 //  console.log(prompts);
-  const [prompts, setPrompts] = useState([]);
-  const getPromptsData = async () => {
-    const promptsUrl = '/api/prompts';
-    const promptsResponse = await fetch(promptsUrl);
-    if (promptsResponse.ok) {
-      const data = await promptsResponse.json();
-      setPrompts(data);
-      console.log("prompts data:", data);
-    }
-  };
+  // const [prompts, setPrompts] = useState([]);
+  // const getPromptsData = async () => {
+  //   const promptsUrl = '/api/prompts';
+  //   const promptsResponse = await fetch(promptsUrl);
+  //   if (promptsResponse.ok) {
+  //     const data = await promptsResponse.json();
+  //     setPrompts(data);
+  //     console.log("prompts data:", data);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getPromptsData();
+  // }, [])
+
+
+  const getData = async () => {
+    await fetch('/api/prompts')
+    .then( res => res.json() )
+    .then( data => {
+      console.log(data.data.rows);
+    })
+    .catch( err => console.log(err) )
+    .finally( () => {
+      // set loading to false
+    })
+  }
 
   useEffect(() => {
-    getPromptsData();
+    getData();
   }, [])
 
   // const navigate = useNavigate();
@@ -33,7 +50,7 @@ const PromptsList = () =>{
   // };
 
   return(
-      <>
+      <main>
       <h1>Prompts</h1>
       {/* <table className="table table-striped">
         <thead>
@@ -74,7 +91,7 @@ const PromptsList = () =>{
             })}
         </tbody>
       </table> */}
-      </>
+      </main>
     );
   }
 
