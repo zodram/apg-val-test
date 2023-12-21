@@ -1,58 +1,51 @@
 "use client"
-// import React from 'react';
-// import { useEffect, useState } from "react";
-// import { useNavigate } from 'react-router-dom';
-// import getPrompts from '@/app/lib/prompts.js'
+import { useEffect, useState } from "react";
+// import runPromptEval from "@/services/genEval"
+import getAllConfigs from "../configurations"
 
 
+export default function PromptList() {
+  const [prompts, setPrompts] = useState([]);
+  const getPrompts = async () => {
+    await fetch('/api/prompts')
+      .then(res => res.json())
+      .then(data => {
+        setPrompts(data.result.rows);
+      })
+      .catch(err => console.log(err))
+  }
+  useEffect(() => {
+    getPrompts();
+  }, []);
 
+  let configs = getAllConfigs();
 
+  const edit = (id) => {
+    window.location.href = `/prompts/${id}`;
+  };
 
-export default function promptList() {
-//  const prompts = getPrompts();
-//  console.log(prompts);
-  // const [prompts, setPrompts] = useState([]);
-  // const getPromptsData = async () => {
-  //   const promptsUrl = '/api/prompts';
-  //   const promptsResponse = await fetch(promptsUrl);
-  //   if (promptsResponse.ok) {
-  //     const data = await promptsResponse.json();
-  //     setPrompts(data);
-  //     console.log("prompts data:", data);
+  async function deletePrompt(id) {
+    await fetch(`/api/prompts/${id}`, {
+      method: 'DELETE'
+    }).then(res => {
+      if (res.ok) {
+        const updatedPrompts = prompts.filter((prompt) => prompt.id !== id);
+        setPrompts(updatedPrompts);
+      }
+    })
+  };
+
+  // let promptsForEval = prompts.filter(prompt => (prompt.expected_response === null))
+  // setInterval(() => {
+  //   if (promptsForEval.length > 0) {
+  //     runPromptEval(promptsForEval, configs)
   //   }
-  // };
+  // }, 10000);
 
-  // useEffect(() => {
-  //   getPromptsData();
-  // }, [])
-
-
-  // const getData = async () => {
-  //   await fetch('/api/prompts')
-  //   .then( res => res.json() )
-  //   .then( data => {
-  //     console.log(data.data.rows);
-  //   })
-  //   .catch( err => console.log(err) )
-  //   .finally( () => {
-  //     // set loading to false
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   getData();
-  // }, [])
-
-  // const navigate = useNavigate();
-  // const edit = (id) => {
-  //   console.log(id);
-  //   navigate(`/prompts/${id}`);
-  // };
-
-  return(
-      <div>
+  return (
+    <div>
       <h1 className="text-center">Prompts</h1>
-      {/* <table className="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>ID</th>
@@ -65,7 +58,7 @@ export default function promptList() {
             <th>Parent ID</th>
             <th>Accuracy Score</th>
             <th>Sympathy Score</th>
-
+            <th>Eval Model</th>
           </tr>
         </thead>
         <tbody>
@@ -80,18 +73,18 @@ export default function promptList() {
                   <td className="align-middle">{prompt.config_id}</td>
                   <td className="align-middle">{prompt.expected_response}</td>
                   <td className="align-middle">
-                    <button type="button" className="btn btn-danger" onClick={ () => edit(prompt.id) }>Edit</button>
-
+                    <button type="button" className="btn btn-primary" onClick={() => edit(prompt.id)}>Edit</button>
+                    <button type="button" className="btn btn-danger" onClick={() => deletePrompt(prompt.id)}>Delete</button>
                   </td>
                   <td className="align-middle">{prompt.parent_id}</td>
                   <td className="align-middle">{prompt.accuracy_score}</td>
+                  <td className="align-middle">{prompt.sympathy_score}</td>
                   <td className="align-middle">{prompt.sympathy_score}</td>
                 </tr>
               );
             })}
         </tbody>
-      </table> */}
-      </div>
-    );
-  }
-
+      </table>
+    </div>
+  );
+}

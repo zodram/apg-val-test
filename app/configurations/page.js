@@ -1,58 +1,40 @@
-// "use client"
-// import React from 'react';
-// import { useEffect, useState } from "react";
-// import { useNavigate } from 'react-router-dom';
-// import getPrompts from '@/app/lib/prompts.js'
+"use client"
+import getAllConfigs from "../configurations"
 
 
+export default function ConfigList() {
+  const configs = getAllConfigs();
 
-
-
-export default function configs() {
-
-  return(
-      <main>
-      <h1>Configurations</h1>
-      {/* <table className="table table-striped">
+  return (
+    <div>
+      <h1 className="text-center">Configurations</h1>
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Language</th>
-            <th>Prompt</th>
-            <th>Response</th>
-            <th>Config ID</th>
-            <th>Expected Response</th>
-            <th>Edit</th>
-            <th>Parent ID</th>
-            <th>Accuracy Score</th>
-            <th>Sympathy Score</th>
-
+            <th>System Prompt</th>
+            <th>Max Tokens</th>
+            <th>Temperature</th>
+            <th>Top P</th>
+            <th>Model</th>
           </tr>
         </thead>
         <tbody>
-          {prompts
-            .map((prompt) => {
+          {configs
+            .map((config) => {
               return (
-                <tr key={prompt.id}>
-                  <td className="align-middle">{prompt.id}</td>
-                  <td className="align-middle">{prompt.lang}</td>
-                  <td className="align-middle">{prompt.prompt}</td>
-                  <td className="align-middle">{prompt.response}</td>
-                  <td className="align-middle">{prompt.config_id}</td>
-                  <td className="align-middle">{prompt.expected_response}</td>
-                  <td className="align-middle">
-                    <button type="button" className="btn btn-danger" onClick={ () => edit(prompt.id) }>Edit</button>
-
-                  </td>
-                  <td className="align-middle">{prompt.parent_id}</td>
-                  <td className="align-middle">{prompt.accuracy_score}</td>
-                  <td className="align-middle">{prompt.sympathy_score}</td>
+                <tr key={config.id}>
+                  <td className="align-middle">{config.id}</td>
+                  <td className="align-middle">{config.system_prompt}</td>
+                  <td className="align-middle">{config.max_tokens}</td>
+                  <td className="align-middle">{config.temperature}</td>
+                  <td className="align-middle">{config.top_p}</td>
+                  <td className="align-middle">{config.model_id}</td>
                 </tr>
               );
             })}
         </tbody>
-      </table> */}
-      </main>
-    );
-  }
-
+      </table>
+    </div>
+  );
+}
