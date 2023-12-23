@@ -3,10 +3,10 @@
 
 
 
-const runPromptsEval = async (promptsForEval, configs) => {
+const runPromptsEval = async (promptsForEval) => {
 
 
-  console.log("running eval for prompts", promptsForEval, configs);
+  console.log("running eval for prompts", promptsForEval);
 
 
 

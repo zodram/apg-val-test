@@ -1,7 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
-import runPromptEval from "@/app/api/_services/runPromptEval"
-import getAllConfigs from "../configurations"
+
+
+
 
 
 export default function PromptList() {
@@ -18,8 +19,6 @@ export default function PromptList() {
     getPrompts();
   }, []);
 
-  let configs = getAllConfigs();
-
   const edit = (id) => {
     window.location.href = `/prompts/${id}`;
   };
@@ -35,12 +34,7 @@ export default function PromptList() {
     })
   };
 
-  let promptsForEval = prompts.filter(prompt => (prompt.expected_response === null) || (prompt.response === null) || (prompt.accuracy_score === null) || (prompt.sympathy_score === null))
-  // setInterval(() => {
-  //   if (promptsForEval.length > 0) {
-  runPromptEval(promptsForEval, configs)
-  //   }
-  // }, 10000);
+
 
   return (
     <div>

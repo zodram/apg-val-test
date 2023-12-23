@@ -2,7 +2,38 @@ import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
 
+import runEval from "@/utils/runEval"
+
+
+
+
 export async function GET(req) {
+  const prompts =
+      await sql`SELECT * FROM prompts ORDER BY id ASC;`;
+  
+    
+
+
+    
+    // let promptsForGenExpRes = prompts.filter(prompt => (prompt.expected_response === null));
+    // // setInterval(() => {
+    // if (promptsForGenExpRes.length > 0) {
+    //     // genExpRes(promptsForGenExpRes)
+    // };
+    // // }, 10000);  
+    // let promptsForGenRes = prompts.filter(prompt => (prompt.response === null));
+    // // setInterval(() => {
+    // if (promptsForGenRes.length > 0) {
+    //     // genRes(promptsForGenRes)
+    // };
+    // }, 10000);
+  let promptsForEval = prompts.filter(prompt => (prompt.accuracy_score === null));
+  if (promptsForEval.length > 0) {
+    console.log(promptsForEval)
+    runEval(promptsForEval)
+  };
+  
+  
   try {
     const result =
       await sql`SELECT * FROM prompts ORDER BY id ASC;`;

@@ -1,9 +1,20 @@
 "use client"
-import getAllConfigs from "../configurations"
+import { useEffect, useState } from "react";
 
 
 export default function ConfigList() {
-  const configs = getAllConfigs();
+  const [configs, setConfigs] = useState([]);
+  const getConfigs = async () => {
+    await fetch('/api/configurations')
+      .then(res => res.json())
+      .then(data => {
+        setConfigs(data.result.rows);
+      })
+      .catch(err => console.log(err))
+  }
+  useEffect(() => {
+    getConfigs();
+  }, []);
 
   return (
     <div>
