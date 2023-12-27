@@ -1,42 +1,54 @@
 "use client"
 import { useEffect, useState } from "react";
+// import runPromptEval from "@/services/genEval"
+import getAllPrompts from "../prompts"
+import getAllConfigs from "../configurations"
 
-
-
+async function genExpResAndRes(prompt, col) {
+  const res = await fetch('/api/genExpResAndRes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      promptData: prompt,
+      col: col
+    }),
+  });
+};
 
 
 export default function PromptList() {
-  const [prompts, setPrompts] = useState([]);
-  const getPrompts = async () => {
-    await fetch('/api/prompts')
-      .then(res => res.json())
-      .then(data => {
-        setPrompts(data.result.rows);
-      })
-      .catch(err => console.log(err))
-  }
-  useEffect(() => {
-    getPrompts();
-  }, []);
-
   const edit = (id) => {
     window.location.href = `/prompts/${id}`;
   };
-
   async function deletePrompt(id) {
     await fetch(`/api/prompts/${id}`, {
       method: 'DELETE'
     }).then(res => {
       if (res.ok) {
-        const updatedPrompts = prompts.filter((prompt) => prompt.id !== id);
-        setPrompts(updatedPrompts);
+        getPrompts();
       }
     })
   };
 
-  let promptsForGenExpRes = prompts.filter((prompt) => (prompt.expected_response === null));
-  console.log(promptsForGenExpRes)
+  const prompts = getAllPrompts();
+  const configs = getAllConfigs();
 
+  let promptsForExpRes = prompts.filter(prompt => (prompt.expected_response === null));
+  console.log("promptsForExpRes:", promptsForExpRes)
+  if (promptsForExpRes.length > 0) {
+    for (let i = 0; i < promptsForExpRes.length; i++) {      
+      genExpResAndRes(promptsForExpRes[i], "ExpRes");
+    };
+  };
+  
+  
+  // setInterval(() => {
+  //   if (promptsForEval.length > 0) {
+  //     runPromptEval(promptsForEval, configs)
+  //   }
+  // }, 10000);
 
   return (
     <div>
